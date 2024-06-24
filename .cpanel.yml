@@ -1,0 +1,7 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/ithosting95x/public_html/gastro
+     - chmod 755 ~/repositories/gastrosoft-web/
+    - /usr/local/bin/npm run build
+    - /bin/rsync -av dist/ $DEPLOYPATH

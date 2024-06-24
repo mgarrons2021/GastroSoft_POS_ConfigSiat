@@ -1,0 +1,14 @@
+#
+# Copyright (c) 2023 Purple Mango Corp.
+#
+---
+version: "3"
+services:
+  magnorest_app:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    volumes:
+      - ./:/app
+    ports:
+      - 10000:8080
