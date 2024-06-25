@@ -235,9 +235,7 @@
           <Column field="cantidad" header="Cantidad" :style="{ width: '80px' }">
             <template #body="slotProps">
               <input type="text" :value="slotProps.data.cantidad" style="width: 100%" minlength="1" maxlength="4"
-                v-on:keyup="
-                  calculateSubtotal(this.carrito.indexOf(slotProps.data))
-                  " />
+                v-on:keyup="calculateSubtotal(this.carrito.indexOf(slotProps.data))" />
             </template>
           </Column>
           <Column field="costo" header="Costo" :style="{ width: '70px' }">
@@ -251,8 +249,7 @@
           <Column field="subtotal" header="Sub Total" :style="{ width: '70px' }">
             <template #body="slotProps">
               <td style="text-align: right" class="text-bold">
-                <!-- {{ slotProps.data.subtotal }} Bs. -->
-                {{ (slotProps.data.subtotal - (slotProps.data.descuento * (slotProps.data.subtotal / 100))).toFixed(2) }} Bs.
+                {{ (slotProps.data.subtotal - (slotProps.data.descuento * (slotProps.data.subtotal / 100))).toFixed(2)}} Bs.
               </td>
             </template>
           </Column>
@@ -286,7 +283,8 @@
             </div>
             <div class="col-2">
 
-              <input type="number" style="width: 100%" :value="descuento_adicional" v-on:keyup="calculatetotalDescuento()" />
+              <input type="number" style="width: 100%" :value="descuento_adicional"
+                v-on:keyup="calculatetotalDescuento()" />
 
             </div>
           </div>
@@ -841,7 +839,7 @@ export default {
           hora_emision_manual: hora_emision_manual_2,
           documento_identidad_id: identity_document_id,
           nit_cliente: this.nit_cliente,
-        
+
         };
       }
       if (this.MetodoPago.descripcion == "Comida Personal") {
@@ -932,7 +930,155 @@ export default {
             .post(this.url + "sale_register", datos_de_venta)
             .then((result) => {
               console.log(result.data);
-              // let visitas = result.data.cantidad_visitas;
+              let visitas = result.data.cantidad_visitas;
+              if (result.data.status) {
+                let cuf = result.data.cuf;
+                let leyenda = result.data.leyenda.descripcion_leyenda;
+                let idcliente = result.data.idcliente;
+                let nro_factura = result.data.nro_factura;
+                let punto_venta = result.data.venta.punto_venta;
+                // let urlSiat = "https://siat.impuestos.gob.bo";
+                let urlSiat = "https://pilotosiat.impuestos.gob.bo";
+                (datos_de_venta.nro_factura = nro_factura),
+                  this.QRValue =
+                  urlSiat + "/consulta/QR?nit=" +
+                  this.datos_empresa.nit +
+                  "&cuf=" +
+                  cuf +
+                  "&numero=" +
+                  nro_factura +
+                  "&t=" +
+                  1;
+                this.get_transaction();
+                //viendo resulatdo de la respuesta de facturacion
+                console.log(result);
+                //CAMBIANDO EL EVENTO SIGNIFICATIVO ID PARA QUE LA REPRESENTACION GRAFICA SALGA CON LEYENDA FUERA DE LINEA
+                if (result.data.evento_significativo != null) {
+                  datos_de_venta.evento_significativo_id = result.data.evento_significativo;
+                }
+                if (result.data.response_siat != "undefined") {
+                  this.$swal.close();
+                  this.$swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Venta Registrada Exitosamente",
+                    text: "Emitida Fuera de Linea",
+                    showConfirmButton: true,
+                    timer: 5000,
+                  });
+                }
+
+                let response_siat = result.data.response_siat
+                  ? result.data.response_siat.RespuestaServicioFacturacion
+                  : "";
+                this.$swal.close();
+
+                if (response_siat != "") {
+                  console.log(
+                    result.data.response_siat.RespuestaServicioFacturacion
+                  );
+                  if (response_siat.codigoEstado == 908) {
+                    this.$swal.fire({
+                      position: "center",
+                      icon: "success",
+                      title: "Codigo Estado: " + response_siat.codigoEstado,
+                      text:
+                        "Codigo Descripcion: " +
+                        response_siat.codigoDescripcion,
+                      showConfirmButton: true,
+                    });
+                  } else if (response_siat.codigoEstado == 902) {
+                    this.$swal.fire({
+                      position: "center",
+                      icon: "error",
+                      title: "Codigo Estado: " + response_siat.codigoEstado,
+                      text:
+                        response_siat.codigoDescripcion +
+                        ' "' +
+                        response_siat.mensajesList.descripcion +
+                        '"',
+                      showConfirmButton: true,
+                    });
+                  } else {
+                    this.$swal.fire({
+                      position: "center",
+                      icon: "error",
+                      title: response_siat.codigoEstado,
+                      text:
+                        response_siat.codigoDescripcion +
+                        ' "' +
+                        response_siat.mensajesList.descripcion +
+                        '"',
+                      showConfirmButton: true,
+                    });
+                  }
+                  // Despues lo muevo adentro porque response_siat = "";
+
+                  if (
+                    result.data.response_siat.RespuestaServicioFacturacion
+                      .codigoEstado === 902
+                  ) {
+                    return;
+                  }
+                  if (
+                    result.data.response_siat == "undefined" &&
+                    result.data.response_siat.RespuestaServicioFacturacion
+                      .codigoEstado !== 902
+                  ) {
+                    setTimeout(function () {
+                      downloadPDF(
+                        datos_de_venta,
+                        this.cufd,
+                        visitas,
+                        cuf,
+                        idcliente,
+                        leyenda,
+                        punto_venta
+                      );
+                    }, 100);
+                  }
+                }
+                setTimeout(function () {
+                  downloadPDF(
+                    datos_de_venta,
+                    this.cufd,
+                    visitas,
+                    cuf,
+                    idcliente,
+                    leyenda,
+                    punto_venta
+                  );
+                }, 50);
+                let ord = localStorage.getItem("Orden");
+                localStorage.setItem("Orden", Number(ord) + 1);
+                this.carrito = [];
+                this.totalDescuento = 0;
+                this.totalNeto = 0;
+                this.total = 0;
+                this.cliente = "";
+                this.nit_ci = "";
+                this.empresa = "";
+                this.celular = "";
+                this.correo = "";
+              } else {
+                console.log(result.data);
+                if (result.data.codigoExcepcion == 1) {
+                  this.mostrarAlert(result.data.codigo, result.data.msg);
+                  return;
+                }
+                if (result.data.codigoExcepcion == 0) {
+                  this.$swal.close();
+                  this.$swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "La venta no se registro correctamente  . . . ",
+                    showConfirmButton: true,
+                    timer: 4000,
+                  });
+                  return;
+                }
+                return;
+              }
             }).catch((err) => {
               console.log(err);
             });
