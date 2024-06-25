@@ -111,6 +111,7 @@ export default {
       turno: "",
       infopersonal: "",
       idturn: 0,
+      nit_cliente: "5371072016",
     };
   },
 
@@ -133,7 +134,7 @@ export default {
     },
     verificarTurno(){
       const turnoId = localStorage.getItem("turnoId");
-      if (turnoId != 'undefined') {
+      if (turnoId != 'undefined' && turnoId != null) {
         const urlComplet = `${this.url}verified_turn?id_turno=${turnoId}`
         axios
           .get(
@@ -208,6 +209,7 @@ export default {
           localStorage.setItem("turnoId", result.data.turno_id);
           this.$router.push("/catalogo");
         } else {
+          this.$swal.close();
           console.log("Something went Wrong");
         }
       });
@@ -216,6 +218,7 @@ export default {
       let var_post = {
         user_id: this.infopersonal.user_id,
         sucursal_id: this.infopersonal.sucursal,
+        nit_cliente: this.nit_cliente,
       };
       console.log(var_post);
       this.check_open_turn(var_post);
