@@ -413,7 +413,7 @@ export default {
       contingencia: null,
       masdemil: false,
       descuento_adicional: 0,
-      nit_cliente: "5371072016",
+      nit_cliente: "",
     };
   },
   components: {
@@ -838,7 +838,8 @@ export default {
           fecha_emision_manual: fecha_emision_manual_2,
           hora_emision_manual: hora_emision_manual_2,
           documento_identidad_id: identity_document_id,
-          nit_cliente: this.nit_cliente,
+          //nit_cliente: this.nit_cliente,
+          nit_cliente:JSON.parse(localStorage.getItem("User")).nit,
 
         };
       }

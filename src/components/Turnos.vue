@@ -111,7 +111,7 @@ export default {
       turno: "",
       infopersonal: "",
       idturn: 0,
-      nit_cliente: "5371072016",
+      nit_cliente: "",
     };
   },
 
@@ -123,6 +123,7 @@ export default {
     this.obtenerDate();
     this.determinateAMorPM();
     this.get_open_turn();
+    //this.nit_cliente=localStorage.getItem("User").nit
   },
   methods: {
     authenticacion() {
@@ -215,12 +216,16 @@ export default {
       });
     },
     goTurn() {
+      this.nit_cliente=JSON.parse(localStorage.getItem("User")).nit
+      console.log(this.nit_cliente);
       let var_post = {
         user_id: this.infopersonal.user_id,
         sucursal_id: this.infopersonal.sucursal,
         nit_cliente: this.nit_cliente,
+
       };
       console.log(var_post);
+      
       this.check_open_turn(var_post);
     },
     check_open_turn(var_post) {
