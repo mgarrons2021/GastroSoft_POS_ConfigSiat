@@ -42,8 +42,6 @@ import axios from "axios";
 		data() {
 			return {
 				plates: '',
-				// ruta: 'http://sistema.donesco.com.bo/',
-				// ruta: 'http://192.168.0.150/gastrosoft-erp-web/src/public',
 				ruta: process.env.VUE_APP_URL_EERPWEBV,
 			}
 		},
