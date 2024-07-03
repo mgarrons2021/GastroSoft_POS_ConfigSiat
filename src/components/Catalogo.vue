@@ -74,7 +74,7 @@
                 icon="fa-solid fa-credit-card" />
             </label>
             <InputText id="totalDescuentoGiftcard" type="text" placeholder="Monto gitf_card"
-              v-model="totalDescuentoGiftcard" />
+              v-model="totalDescuentoGiftcard" readonly />
           </div>
 
           <div class="field col-2">
@@ -243,7 +243,7 @@
           <Column field="descuento" header="Descuento" :style="{ width: '70px' }">
             <template #body="slotProps">
               <input type="number" :value="slotProps.data.descuento" style="width: 100%" minlength="1" maxlength="4"
-                v-on:keyup="calculateSubtotalDescuento(this.carrito.indexOf(slotProps.data))" />
+                v-on:keyup="calculateSubtotalDescuento(this.carrito.indexOf(slotProps.data))" readonly/>
             </template>
           </Column>
           <Column field="subtotal" header="Sub Total" :style="{ width: '70px' }">
@@ -284,7 +284,7 @@
             <div class="col-2">
 
               <input type="number" style="width: 100%" :value="descuento_adicional"
-                v-on:keyup="calculatetotalDescuento()" />
+                v-on:keyup="calculatetotalDescuento()" readonly />
 
             </div>
           </div>

@@ -37,7 +37,7 @@ export default {
       mobileMenuActive: false,
       menu: [
         {
-          label: "GastroSoft",
+          label: "GastroSoftV1",
           items: [
             {
               label: "Turno",
