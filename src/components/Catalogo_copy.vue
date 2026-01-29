@@ -5,7 +5,8 @@
         <div class="formgrid grid" :style="'display: flex;width:100%;'">
           <div class="field col-9">
             <h4 :style="'text-align:left;clear: both; '">
-              <span style="font-family: impact; font-size: 16px; color: black;"> Datos Factura - Nro Transaccion: </span>
+              <span style="font-family: impact; font-size: 16px; color: black;"> Datos Factura - Nro Transaccion:
+              </span>
               {{ this.nro_transaccion + 1 }}
             </h4>
             <!-- Add the style and icon you want using the String format -->
@@ -56,17 +57,15 @@
               <span style="font-family: impact; font-size: 13px; color: black;"> Pago </span> <font-awesome-icon
                 icon="fa-solid fa-cart-shopping" />
             </label>
-            <Dropdown v-model="MetodoPago" :options="MetodosPagos" optionLabel="descripcion" :placeholder="'EFECTIVO'" 
-            @change="mostrarTarjeta()"
-            />
+            <Dropdown v-model="MetodoPago" :options="MetodosPagos" optionLabel="descripcion" :placeholder="'EFECTIVO'"
+              @change="mostrarTarjeta()" />
           </div>
           <div class="field col-2" :style="isVisibilityTarjeta ? 'display:block' : 'display:none'">
             <label for="nro_tarjeta">
               <span style="font-family: impact; font-size: 13px; color: black;"> Nro Tarjeta </span><font-awesome-icon
                 icon="fa-solid fa-credit-card" />
             </label>
-            <InputText id="nro_tarjeta" type="text" placeholder="Nro de Tarjeta" v-model="nro_tarjeta"
-               />
+            <InputText id="nro_tarjeta" type="text" placeholder="Nro de Tarjeta" v-model="nro_tarjeta" />
           </div>
 
           <div class="field col-2">
@@ -110,8 +109,8 @@
           </div>
           <div class="field col-2">
             <label for="cliente">
-              <span style="font-family: impact; font-size: 13px; color: black;"> Nombre Cliente </span><font-awesome-icon
-                icon="fa-solid fa-user" />
+              <span style="font-family: impact; font-size: 13px; color: black;"> Nombre Cliente
+              </span><font-awesome-icon icon="fa-solid fa-user" />
             </label>
             <InputText id="cliente" type="text" placeholder="Cliente" v-model="cliente" />
           </div>
@@ -183,8 +182,8 @@
                     <img style="height: 40px" v-if="item.imagen == null"
                       src="https://cdn0.iconfinder.com/data/icons/pixel-perfect-at-24px-volume-2/24/2034-512.png"
                       class="w-5 shadow-1" />
-                    <img style="height: 40px" v-else :src="process.env.VUE_APP_URL_EERPWEBV + '' + item.imagen" :alt="item.Plato"
-                      class="w-9 shadow-1" />
+                    <img style="height: 40px" v-else :src="process.env.VUE_APP_URL_EERPWEBV + '' + item.imagen"
+                      :alt="item.Plato" class="w-9 shadow-1" />
                     <div class="text-1xl font-bold" style="font-size: 12px">
                       {{ item.Plato }}
                     </div>
@@ -192,7 +191,8 @@
                   <div class="flex align-items-center justify-content-center">
                     <div class="row">
                       <Button class="p-button-raised p-button-primary p-button-sm mr-1 mb-1"
-                        :label="'Venta N. ' + item.Precio + ' Bs'" style="padding: 4px; margin-top: 7px; font-size: 10px"
+                        :label="'Venta N. ' + item.Precio + ' Bs'"
+                        style="padding: 4px; margin-top: 7px; font-size: 10px"
                         v-on:click="addPlateNormal(item)"></Button>
                       <Button class="p-button-raised p-button-info p-button-sm mr-1 mb-1"
                         :label="'Delivery ' + item.PrecioDelivery + ' Bs'"
@@ -290,7 +290,8 @@
               <span style="font-family: impact; font-size: 13px; color: black;"> Total Neto: </span>
             </div>
             <div class="col-2">
-              <span style="font-family: impact; font-size: 13px; color: black;"> {{ total - totalDescuento }} Bs. </span>
+              <span style="font-family: impact; font-size: 13px; color: black;"> {{ total - totalDescuento }} Bs.
+              </span>
               <!-- <p class="text-right">{{ total - totalDescuento }} Bs.</p> -->
             </div>
           </div>
@@ -345,7 +346,7 @@ export default {
         nombre: "GASTROSOFT",
         celular: "78555410",
         fecha: "2021-03-23",
-        nit: "5371072016",
+        nit: "166172023",
       },
       QRValue: "",
       optionsPlace: {
@@ -908,7 +909,7 @@ export default {
               return;
             }
           }
-          if (datos_de_venta.nit_ci == "5371072016") {
+          if (datos_de_venta.nit_ci == "166172023") {
             this.mostrarAlert(
               "NIT DE LA EMPRESA GASTROSOFT",
               "Este NIT no está autorizado para facturar"

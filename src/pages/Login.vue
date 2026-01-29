@@ -58,14 +58,7 @@
             </div>
 
             <div class="w-full md:w-10 mx-auto">
-              <InputText
-                id="email"
-                v-model="email"
-                type="hidden"
-                class="w-full mb-3"
-                placeholder="Email"
-                style="padding: 1rem"
-              />
+            
 
               <label
                 for="codigo"
@@ -221,17 +214,6 @@ export default {
       });
     },
 
-    computed: {
-      logoColor() {
-        if (this.$appState.darkTheme) return "white";
-        return "dark";
-      },
-    },
-    mounted() {
-      //   this.$toast.show("Welcome!", "Hey", this.notificationSystem.options.show);
-      // this.objprint=new ConectorPlugin();
-    },
-    components: {},
   },
   setup() {
     const url = inject("url");

@@ -61,14 +61,14 @@
             <Dropdown v-model="MetodoPago" :options="MetodosPagos" optionLabel="descripcion" :placeholder="'EFECTIVO'"
               filter filterExact />
           </div>
-          <div class="field col-1">
+          <div hidden class="field col-1">
             <label for="nro_tarjeta">
               <span style="font-family: impact; font-size: 13px; color: black;"> Nro Tarjeta </span><font-awesome-icon
                 icon="fa-solid fa-credit-card" />
             </label>
             <InputText id="nro_tarjeta" type="text" placeholder="Nro de Tarjeta" v-model="nro_tarjeta" />
           </div>
-          <div class="field col-1">
+          <div hidden class="field col-1">
             <label for="totalDescuentoGiftcard">
               <span style="font-family: impact; font-size: 13px; color: black;"> Gift Card </span><font-awesome-icon
                 icon="fa-solid fa-credit-card" />
@@ -191,8 +191,8 @@
                   <img v-if="slotProps.data.imagen == null"
                     src="https://cdn0.iconfinder.com/data/icons/pixel-perfect-at-24px-volume-2/24/2034-512.png"
                     class="w-5 shadow-1" />
-                  <img v-else :src="process.env.VUE_APP_URL_EERPWEBV + '' + slotProps.data.imagen"
-                    :alt="slotProps.data.nombre" class="w-9 shadow-1" />
+                  <img v-else :src="this.ruta + '' + slotProps.data.imagen" :alt="slotProps.data.nombre"
+                    class="w-9 shadow-1" />
                   <div class="text-1xl font-bold" style="font-size: 12px">
                     {{ slotProps.data.Plato }}
                   </div>
@@ -249,12 +249,13 @@
           <Column field="subtotal" header="Sub Total" :style="{ width: '70px' }">
             <template #body="slotProps">
               <td style="text-align: right" class="text-bold">
-                {{ (slotProps.data.subtotal - (slotProps.data.descuento * (slotProps.data.subtotal / 100))).toFixed(2)}} Bs.
+                {{ (slotProps.data.subtotal - (slotProps.data.descuento * (slotProps.data.subtotal / 100))).toFixed(2)
+                }}
+                Bs.
               </td>
             </template>
           </Column>
         </DataTable>
-
         <div class="card">
           <div class="grid">
             <div class="col-10">
@@ -262,7 +263,6 @@
             </div>
             <div class="col-2">
               <span style="font-family: impact; font-size: 13px; color: black;"> {{ this.total }} Bs. </span>
-
             </div>
           </div>
           <div class="grid">
@@ -359,10 +359,10 @@ export default {
       nro_transaccion: 0,
       codigo: "",
       datos_empresa: {
-        nombre: "GASTROSOFT",
+        nombre: "DONESCO S.R.L",
         celular: "78555410",
         fecha: "2021-03-23",
-        nit: "5371072016",
+        nit: "166172023",
       },
       QRValue: "",
       optionsPlace: {
@@ -386,7 +386,7 @@ export default {
       sortField: null,
       sortOptions: [],
       plates: [],
-      ruta: process.env.VUE_APP_URL_API_REST_EERPWEBV,
+      ruta: process.env.VUE_APP_URL_EERPWEBV,
       carrito: [],
       subtotal: 0,
       subtotales: [],
@@ -572,14 +572,21 @@ export default {
         });
     },
     getIdentityMetodoPago() {
-      let result = axios
+      this.MetodosPagos = [
+        { id: "Efectivo", descripcion: "Efectivo" },
+        { id: "Tarjeta Credito/Debito", descripcion: "Tarjeta Credito/Debito" },
+        { id: "Prepago", descripcion: "Prepago" },
+        { id: "Comida Personal", descripcion: "Comida Personal" },
+      ];
+      /* let result = axios
         .get(this.url + "getIdentityMetodoPago")
         .then((res) => {
           this.MetodosPagos = res.data.MetodosPagos;
+          console.log(this.MetodosPagos);
         })
         .catch((err) => {
           console.log(err);
-        });
+        }); */
     },
     calculateSubtotal: function (id) {
       let cantidad = (this.carrito[id].cantidad = event.target.value);
@@ -653,6 +660,7 @@ export default {
         });
     },
     getPlates(id) {
+      console.log(id, this.ruta);
       axios
         .get(
           this.url +
@@ -839,7 +847,7 @@ export default {
           hora_emision_manual: hora_emision_manual_2,
           documento_identidad_id: identity_document_id,
           //nit_cliente: this.nit_cliente,
-          nit_cliente:JSON.parse(localStorage.getItem("User")).nit,
+          nit_cliente: JSON.parse(localStorage.getItem("User")).nit,
 
         };
       }
@@ -913,9 +921,9 @@ export default {
               return;
             }
           }
-          if (datos_de_venta.nit_ci == "5371072016") {
+          if (datos_de_venta.nit_ci == "166172023") {
             this.mostrarAlert(
-              "NIT DE LA EMPRESA GASTROSOFT",
+              "NIT DE LA EMPRESA DONESCO S.R.L",
               "Este NIT no está autorizado para facturar"
             );
             return;
@@ -938,8 +946,8 @@ export default {
                 let idcliente = result.data.idcliente;
                 let nro_factura = result.data.nro_factura;
                 let punto_venta = result.data.venta.punto_venta;
-                // let urlSiat = "https://siat.impuestos.gob.bo";
-                let urlSiat = "https://pilotosiat.impuestos.gob.bo";
+                let urlSiat = "https://siat.impuestos.gob.bo";
+                // let urlSiat = "https://pilotosiat.impuestos.gob.bo";
                 (datos_de_venta.nro_factura = nro_factura),
                   this.QRValue =
                   urlSiat + "/consulta/QR?nit=" +
