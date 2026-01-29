@@ -5,9 +5,9 @@ import html2canvas from "html2canvas";
 import moment from "moment";
 
 let datos_empresa = {
-  nombre: "GASTROSOFT",
+  nombre: "DONESCO S.R.L",
   celular: "78555410",
-  nit: "5371072016",
+  nit: "166172023",
 };
 let fecha_actual = new Date();
 let hora_actual_2 = new Date();
@@ -20,7 +20,7 @@ export default function downloadPDF(
   cuf = null,
   idcliente = null,
   leyenda = null,
-  punto_venta = 0
+  punto_venta = 0,
 ) {
   var hora_actual;
   if (datos.hora_actual) {
@@ -39,7 +39,7 @@ export default function downloadPDF(
   if (datos.fecha_emision_manual != null && datos.hora_emision_manual != null) {
     hora_actual = moment(datos.hora_emision_manual, "HH:mm:ss").format("HH:mm");
     fecha_actual2 = moment(datos.fecha_emision_manual, "Y-MM-DD").format(
-      "DD/MM/Y"
+      "DD/MM/Y",
     );
   }
 
@@ -59,11 +59,19 @@ export default function downloadPDF(
     let direccion = JSON.parse(localStorage.getItem("User")).direccion;
 
     pdf.setFontSize(9);
-   
+
     salto += 3;
-    pdf.setFont(undefined, 'bold').text("FACTURA", width / 2, salto, { align: "center" }).setFont(undefined, 'normal');
+    pdf
+      .setFont(undefined, "bold")
+      .text("FACTURA", width / 2, salto, { align: "center" })
+      .setFont(undefined, "normal");
     salto += 3;
-    pdf.setFont(undefined, 'bold').text("CON DERECHO A CRÉDITO FISCAL", width / 2, salto, {align: "center",}).setFont(undefined, 'normal') ;
+    pdf
+      .setFont(undefined, "bold")
+      .text("CON DERECHO A CRÉDITO FISCAL", width / 2, salto, {
+        align: "center",
+      })
+      .setFont(undefined, "normal");
     salto += 3;
     pdf.text(datos_empresa.nombre, width / 2, salto, "center");
     salto += 3;
@@ -84,32 +92,41 @@ export default function downloadPDF(
       "------------------------------------------------------------------------------------------------",
       width / 2,
       salto,
-      "center"
+      "center",
     );
     pdf.setFontSize(9);
     salto += 4;
-    pdf.setFont(undefined, 'bold').text("NIT", width / 2, salto, "center").setFont(undefined, 'normal');
+    pdf
+      .setFont(undefined, "bold")
+      .text("NIT", width / 2, salto, "center")
+      .setFont(undefined, "normal");
     salto += 4;
     pdf.text("" + datos_empresa.nit, width / 2, salto, "center");
     salto += 4;
-    pdf.setFont(undefined, 'bold').text("FACTURA Nº", width / 2, salto, "center").setFont(undefined, 'normal');
+    pdf
+      .setFont(undefined, "bold")
+      .text("FACTURA Nº", width / 2, salto, "center")
+      .setFont(undefined, "normal");
     salto += 4;
     pdf.text("" + datos.nro_factura, width / 2, salto, "center");
     salto += 4;
-    pdf.setFont(undefined, 'bold').text("CÓD. AUTORIZACIÓN", width / 2, salto, "center").setFont(undefined, 'normal');
+    pdf
+      .setFont(undefined, "bold")
+      .text("CÓD. AUTORIZACIÓN", width / 2, salto, "center")
+      .setFont(undefined, "normal");
     salto += 4;
     let cuf_part1 = cuf.substring(0, width / 2);
     let cuf_part2 = cuf.substring(width / 2, 85);
-    pdf.text(cuf_part1, pdf.internal.pageSize.getWidth() / 2, salto, 'center');
+    pdf.text(cuf_part1, pdf.internal.pageSize.getWidth() / 2, salto, "center");
     salto += 3;
-    pdf.text(cuf_part2, pdf.internal.pageSize.getWidth() / 2, salto, 'center');
+    pdf.text(cuf_part2, pdf.internal.pageSize.getWidth() / 2, salto, "center");
     salto += 4;
     pdf.setFontSize(9);
     pdf.text(
       "------------------------------------------------------------------------------------------------------------------",
       width / 2,
       salto,
-      "center"
+      "center",
     );
 
     let nombre = datos.cliente.toUpperCase().split(" ");
@@ -145,7 +162,10 @@ export default function downloadPDF(
         }
       }
       nomb1;
-      pdf.setFont(undefined, 'bold').text("NOMBRE/RAZÓN SOCIAL:", width * 0.03, salto).setFont(undefined, 'normal');
+      pdf
+        .setFont(undefined, "bold")
+        .text("NOMBRE/RAZÓN SOCIAL:", width * 0.03, salto)
+        .setFont(undefined, "normal");
       pdf.text(nomb1, width * 0.5, salto);
       salto += 3;
       pdf.text(nomb2, width * 0.5, salto);
@@ -154,7 +174,10 @@ export default function downloadPDF(
         pdf.text(nomb3, width * 0.2, salto);
       }
     } else {
-      pdf.setFont(undefined, 'bold').text("NOMBRE/RAZÓN SOCIAL:", width * 0.03, salto).setFont(undefined, 'normal');
+      pdf
+        .setFont(undefined, "bold")
+        .text("NOMBRE/RAZÓN SOCIAL:", width * 0.03, salto)
+        .setFont(undefined, "normal");
       pdf.text(datos.cliente, width * 0.5, salto);
     }
     salto += 4;
@@ -162,13 +185,22 @@ export default function downloadPDF(
       datos.complemento != null && datos.complemento != ""
         ? " - " + datos.complemento
         : "";
-    pdf.setFont(undefined, 'bold').text("                          NIT/CI/CEX:", width * 0.03, salto).setFont(undefined, 'normal');
+    pdf
+      .setFont(undefined, "bold")
+      .text("                          NIT/CI/CEX:", width * 0.03, salto)
+      .setFont(undefined, "normal");
     pdf.text(datos.nit_ci + complemento, width * 0.5, salto);
     salto += 4;
-    pdf.setFont(undefined, 'bold').text("                   COD. CLIENTE:", width * 0.03, salto).setFont(undefined, 'normal');
+    pdf
+      .setFont(undefined, "bold")
+      .text("                   COD. CLIENTE:", width * 0.03, salto)
+      .setFont(undefined, "normal");
     pdf.text(idcliente.toString(), width * 0.5, salto);
     salto += 4;
-    pdf.setFont(undefined, 'bold').text("          FECHA DE EMISIÓN:", width * 0.03, salto).setFont(undefined, 'normal');
+    pdf
+      .setFont(undefined, "bold")
+      .text("          FECHA DE EMISIÓN:", width * 0.03, salto)
+      .setFont(undefined, "normal");
     if (datos.fecha != null) {
       pdf.text(datos.fecha + " " + hora_actual, width * 0.5, salto);
     } else {
@@ -180,30 +212,55 @@ export default function downloadPDF(
       "----------------------------------------------------------------------------------------------------------",
       width / 2,
       salto,
-      "center"
+      "center",
     );
 
     //x,y
     salto += 4;
-    pdf.setFont(undefined, 'bold').text("DETALLE", width / 2, salto, "center").setFont(undefined, 'normal');
+    pdf
+      .setFont(undefined, "bold")
+      .text("DETALLE", width / 2, salto, "center")
+      .setFont(undefined, "normal");
     salto += 4;
     let subtotal_descuento = 0;
     datos.detalle_venta.forEach((element) => {
       if (element.plato.toString().length > 50) {
-        pdf.setFont(undefined, 'bold').text(element.plato_id + " - " + element.plato.toString().substring(0, 50), width * 0.05,salto).setFont(undefined, 'normal');
+        pdf
+          .setFont(undefined, "bold")
+          .text(
+            element.plato_id +
+              " - " +
+              element.plato.toString().substring(0, 50),
+            width * 0.05,
+            salto,
+          )
+          .setFont(undefined, "normal");
       } else {
-        pdf.setFont(undefined, 'bold').text(element.plato_id + " - " + element.plato.toString(), 2, salto).setFont(undefined, 'normal');
+        pdf
+          .setFont(undefined, "bold")
+          .text(element.plato_id + " - " + element.plato.toString(), 2, salto)
+          .setFont(undefined, "normal");
       }
       salto += 4;
       if (element.plato.toString().length > 50) {
-        pdf.setFont(undefined, 'bold').text(element.plato.toString().substring(50, element.plato.toString().length),width * 0.05,salto).setFont(undefined, 'normal');
+        pdf
+          .setFont(undefined, "bold")
+          .text(
+            element.plato
+              .toString()
+              .substring(50, element.plato.toString().length),
+            width * 0.05,
+            salto,
+          )
+          .setFont(undefined, "normal");
         salto += 4;
       }
       pdf.text("Unidad de Medida: Unidad (Servicios)", width * 0.05, salto);
       salto += 4;
       let _cantidad = parseFloat(element.cantidad);
-      let descuento_conv = (element.descuento * (_cantidad * element.costo)/100);
-      subtotal_descuento+= descuento_conv
+      let descuento_conv =
+        (element.descuento * (_cantidad * element.costo)) / 100;
+      subtotal_descuento += descuento_conv;
       pdf.text(
         _cantidad.toFixed(2).toString() +
           " X " +
@@ -211,14 +268,16 @@ export default function downloadPDF(
           " - " +
           parseFloat(descuento_conv).toFixed(2).toString(),
         width * 0.05,
-        salto
+        salto,
       );
 
       //pdf.text(element.costo.toString(), 50, salto);
       pdf.text(
-        parseFloat(_cantidad * element.costo - descuento_conv).toFixed(2).toString(),
+        parseFloat(_cantidad * element.costo - descuento_conv)
+          .toFixed(2)
+          .toString(),
         width * 0.85,
-        salto
+        salto,
       );
       salto += 5;
     });
@@ -227,32 +286,34 @@ export default function downloadPDF(
       "--------------------------------------------------------------------------------------------------------",
       width / 2,
       salto,
-      "center"
+      "center",
     );
 
     salto += 4;
     pdf.text(
       "                                         Subtotal Bs.",
       width * 0.1,
-      salto
+      salto,
     );
-    let subtotales= (datos.total_venta - datos.total_descuento).toFixed(2).toString()
-    pdf.text(
-      subtotales, width * 0.85, salto
-    );
+    let subtotales = (datos.total_venta - datos.total_descuento)
+      .toFixed(2)
+      .toString();
+    pdf.text(subtotales, width * 0.85, salto);
     salto += 4;
     pdf.text(
       "                                     Descuento Bs.",
       width * 0.1,
-      salto
+      salto,
     );
-    let descuento_adicional = parseFloat(datos.total_descuento_adicional).toFixed(2);
+    let descuento_adicional = parseFloat(
+      datos.total_descuento_adicional,
+    ).toFixed(2);
     pdf.text(descuento_adicional.toString(), width * 0.85, salto);
     salto += 4;
     pdf.text(
       "                                              Total Bs.",
       width * 0.1,
-      salto
+      salto,
     );
     let total = parseFloat(subtotales - descuento_adicional).toFixed(2);
     pdf.text(total.toString(), width * 0.85, salto);
@@ -260,36 +321,60 @@ export default function downloadPDF(
     pdf.text(
       "                             Monto Gift Card Bs.",
       width * 0.1,
-      salto
+      salto,
     );
-    let descuento_giftcard = parseFloat(datos.total_descuento_giftcard).toFixed(2);
+    let descuento_giftcard = parseFloat(datos.total_descuento_giftcard).toFixed(
+      2,
+    );
     pdf.text(descuento_giftcard.toString(), width * 0.85, salto);
     salto += 4;
-    pdf.setFont(undefined, 'bold').text(
-      "                             Monto a Pagar Bs.",
-      width * 0.1,
-      salto
-    );
-    let monto_a_pagar = parseFloat( 0 +datos.total_venta - datos.total_descuento - descuento_adicional - descuento_giftcard 
+    pdf
+      .setFont(undefined, "bold")
+      .text(
+        "                             Monto a Pagar Bs.",
+        width * 0.1,
+        salto,
+      );
+    let monto_a_pagar = parseFloat(
+      0 +
+        datos.total_venta -
+        datos.total_descuento -
+        descuento_adicional -
+        descuento_giftcard,
     ).toFixed(2);
     pdf.text(monto_a_pagar.toString(), width * 0.85, salto);
     salto += 4;
-    pdf.setFont(undefined, 'bold').text("       Importe Base Credito Fiscal Bs.", width * 0.1, salto);
-    let importe_base_credito_fiscal = parseFloat(0 + datos.total_venta- descuento_giftcard - descuento_adicional - datos.total_descuento
+    pdf
+      .setFont(undefined, "bold")
+      .text("       Importe Base Credito Fiscal Bs.", width * 0.1, salto);
+    let importe_base_credito_fiscal = parseFloat(
+      0 +
+        datos.total_venta -
+        descuento_giftcard -
+        descuento_adicional -
+        datos.total_descuento,
     ).toFixed(2);
-    pdf.text(importe_base_credito_fiscal.toString(), width * 0.85, salto).setFont(undefined, 'normal');
+    pdf
+      .text(importe_base_credito_fiscal.toString(), width * 0.85, salto)
+      .setFont(undefined, "normal");
     salto += 6;
     pdf.setFontSize(9);
     pdf.text(
       "Son : " +
-        NumeroaLetras(datos.total_venta - datos.total_descuento - descuento_adicional- descuento_giftcard, {
-          plural: " Bolivianos",
-          singular: " Boliviano",
-          centPlural: " Centavos",
-          centSingular: " Centavo",
-        }).toLowerCase(),
+        NumeroaLetras(
+          datos.total_venta -
+            datos.total_descuento -
+            descuento_adicional -
+            descuento_giftcard,
+          {
+            plural: " Bolivianos",
+            singular: " Boliviano",
+            centPlural: " Centavos",
+            centSingular: " Centavo",
+          },
+        ).toLowerCase(),
       2,
-      salto
+      salto,
     );
 
     salto += 4;
@@ -299,34 +384,60 @@ export default function downloadPDF(
       "----------------------------------------------------------------------------------------------------------",
       width / 2,
       salto,
-      "center"
+      "center",
     );
     pdf.setFontSize(8);
     salto += 5;
-    pdf.text('ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAÍS,', pdf.internal.pageSize.getWidth() / 2, salto, 'center');
+    pdf.text(
+      "ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAÍS,",
+      pdf.internal.pageSize.getWidth() / 2,
+      salto,
+      "center",
+    );
     salto += 4;
     pdf.text(
       "EL USO ILÍCITO SERÁ SANCIONADO PENALMENTE DE",
-      pdf.internal.pageSize.getWidth() / 2, salto, 'center'
+      pdf.internal.pageSize.getWidth() / 2,
+      salto,
+      "center",
     );
     salto += 4;
-    pdf.text('ACUERDO A LEY', pdf.internal.pageSize.getWidth() / 2, salto, 'center');
+    pdf.text(
+      "ACUERDO A LEY",
+      pdf.internal.pageSize.getWidth() / 2,
+      salto,
+      "center",
+    );
     salto += 6;
     pdf.setFontSize(8);
-    pdf.text(leyenda.toString().substring(0, 58), pdf.internal.pageSize.getWidth() / 2, salto, 'center');
+    pdf.text(
+      leyenda.toString().substring(0, 58),
+      pdf.internal.pageSize.getWidth() / 2,
+      salto,
+      "center",
+    );
     salto += 4;
     if (leyenda.toString().length > 120) {
-      pdf.text(leyenda.toString().substring(58, 120), pdf.internal.pageSize.getWidth() / 2, salto, 'center');
+      pdf.text(
+        leyenda.toString().substring(58, 120),
+        pdf.internal.pageSize.getWidth() / 2,
+        salto,
+        "center",
+      );
       salto += 4;
       pdf.text(
         leyenda.toString().substring(120, leyenda.toString().length),
-        pdf.internal.pageSize.getWidth() / 2, salto, 'center'
+        pdf.internal.pageSize.getWidth() / 2,
+        salto,
+        "center",
       );
       salto += 6;
     } else {
       pdf.text(
         leyenda.toString().substring(58, leyenda.toString().length),
-        pdf.internal.pageSize.getWidth() / 2, salto, 'center'
+        pdf.internal.pageSize.getWidth() / 2,
+        salto,
+        "center",
       );
       salto += 6;
     }
@@ -335,37 +446,66 @@ export default function downloadPDF(
       pdf.text(
         '"Este documento es la Representación Gráfica de un',
         pdf.internal.pageSize.getWidth() / 2,
-        salto, 'center'
+        salto,
+        "center",
       );
       salto += 4;
       pdf.text(
         "Documento Fiscal Digital emitido en una modalidad de",
         pdf.internal.pageSize.getWidth() / 2,
-        salto, 'center'
+        salto,
+        "center",
       );
       salto += 4;
-      pdf.text("facturación en línea”",pdf.internal.pageSize.getWidth() / 2, salto, 'center');
+      pdf.text(
+        "facturación en línea”",
+        pdf.internal.pageSize.getWidth() / 2,
+        salto,
+        "center",
+      );
     } else {
       pdf.text(
         '"Este documento es la Representación Gráfica de un',
-        pdf.internal.pageSize.getWidth() / 2, salto, 'center'
+        pdf.internal.pageSize.getWidth() / 2,
+        salto,
+        "center",
       );
       salto += 4;
       pdf.text(
         "Documento Fiscal Digital emitido fuera de linea, verifique su",
-        pdf.internal.pageSize.getWidth() / 2, salto, 'center'
+        pdf.internal.pageSize.getWidth() / 2,
+        salto,
+        "center",
       );
       salto += 4;
-      pdf.text("envio con su proveedor o en la pagina web", pdf.internal.pageSize.getWidth() / 2, salto, 'center');
+      pdf.text(
+        "envio con su proveedor o en la pagina web",
+        pdf.internal.pageSize.getWidth() / 2,
+        salto,
+        "center",
+      );
       salto += 4;
-      pdf.text("www.impuestos.gob.bo”", pdf.internal.pageSize.getWidth() / 2, salto, 'center');
+      pdf.text(
+        "www.impuestos.gob.bo”",
+        pdf.internal.pageSize.getWidth() / 2,
+        salto,
+        "center",
+      );
     }
     salto += 6;
     var imgData = canvas.toDataURL("image/jpeg", 1.0);
     var imgWidth = 200;
     var imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-    pdf.addImage(imgData, "PNG", width * 0.3, salto, imgWidth, imgHeight, 'center'); //ideal 40
+    pdf.addImage(
+      imgData,
+      "PNG",
+      width * 0.3,
+      salto,
+      imgWidth,
+      imgHeight,
+      "center",
+    ); //ideal 40
     content_qr.style.opacity = 0;
     salto += 35;
 
@@ -392,7 +532,7 @@ function generarCodigoControl(codigo_control) {
     codigo_control.nit_ci,
     codigo_control.fecha_transaccion,
     codigo_control.total_transaccion,
-    codigo_control.llave_dosificacion
+    codigo_control.llave_dosificacion,
   );
 }
 

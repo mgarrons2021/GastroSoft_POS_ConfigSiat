@@ -277,7 +277,10 @@ export default {
           if (result.isConfirmed) {
             localStorage.removeItem("User");
             this.$swal.fire("Ok", "Sesion cerrada correctamente", "success");
+            // limpiar todas las rutas y solo redirigir al login
+            this.$router.go();
             this.$router.push("/login");
+            // this.$router.push("/login")
           }
         });
     },

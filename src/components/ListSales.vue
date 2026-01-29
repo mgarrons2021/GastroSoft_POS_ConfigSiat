@@ -78,12 +78,12 @@
         </Column>
         <Column field="total_venta" header="Total Venta" :style="{ width: '100px' }">
           <template #body="slotProps">
-            <td>{{ parseFloat(slotProps.data.total_venta ).toFixed(2) }} Bs</td>
+            <td>{{ parseFloat(slotProps.data.total_venta).toFixed(2) }} Bs</td>
           </template>
         </Column>
         <Column field="total_neto" header="Total Venta Neta" :style="{ width: '100px' }">
           <template #body="slotProps">
-            <td>{{ parseFloat(slotProps.data.total_neto ).toFixed(2) }} Bs</td>
+            <td>{{ parseFloat(slotProps.data.total_neto).toFixed(2) }} Bs</td>
           </template>
         </Column>
         <Column field="detalle" header="Detalle" :style="{ width: '20px' }">
@@ -244,10 +244,10 @@ export default {
             if (result.data.success) {
               let cuf = result.data.ventas.cuf;
               let nro_factura = result.data.ventas.numero_factura;
-              // let urlSiat = "https://siat.impuestos.gob.bo";
-              let urlSiat = "https://pilotosiat.impuestos.gob.bo";
+              let urlSiat = "https://siat.impuestos.gob.bo";
+              // let urlSiat = "https://pilotosiat.impuestos.gob.bo";
               this.QRValue =
-                urlSiat + "/consulta/QR?nit=5371072016" +
+                urlSiat + "/consulta/QR?nit=166172023" +
                 "&cuf=" +
                 cuf +
                 "&numero=" +
@@ -273,8 +273,8 @@ export default {
               }
 
               let datos_de_venta = {
-                total_descuento_adicional:result.data.ventas.total_descuento_adicional,
-                total_descuento_giftcard:result.data.ventas.total_descuento_giftcard,
+                total_descuento_adicional: result.data.ventas.total_descuento_adicional,
+                total_descuento_giftcard: result.data.ventas.total_descuento_giftcard,
                 cliente: result.data.ventas.nombre,
                 nit_ci: result.data.ventas.ci_nit,
                 total_venta: parseFloat(result.data.ventas.total_venta).toFixed(2),
@@ -312,10 +312,10 @@ export default {
               let nro_factura = result.data.ventas.numero_factura;
               let idcliente = result.data.ventas.idcliente;
               let leyenda = result.data.leyenda.descripcion_leyenda;
-              let urlSiat = "https://pilotosiat.impuestos.gob.bo";
-              // let urlSiat = "https://siat.impuestos.gob.bo";
+              let urlSiat = "https://siat.impuestos.gob.bo";
+              // let urlSiat = "https://pilotosiat.impuestos.gob.bo";
               this.QRValue =
-                urlSiat + "/consulta/QR?nit=5371072016" +
+                urlSiat + "/consulta/QR?nit=166172023" +
                 "&cuf=" +
                 cuf +
                 "&numero=" +
@@ -347,7 +347,7 @@ export default {
                 cliente: result.data.ventas.nombre,
                 complemento: result.data.ventas.complemento,
                 total_descuento_adicional: result.data.ventas.total_descuento_adicional,
-                total_descuento_giftcard:result.data.ventas.total_descuento_giftcard,
+                total_descuento_giftcard: result.data.ventas.total_descuento_giftcard,
                 nit_ci: result.data.ventas.ci_nit,
                 nro_factura: result.data.ventas.numero_factura,
                 nro_autorizacion: result.data.ventas.nro_autorizacion,

@@ -5,7 +5,8 @@
         <div class="formgrid grid" :style="'display: flex;width:100%;'">
           <div class="field col-9">
             <h4 :style="'text-align:left;clear: both; '">
-              <span style="font-family: impact; font-size: 16px; color: black;"> Datos Factura - Nro Transaccion: </span>
+              <span style="font-family: impact; font-size: 16px; color: black;"> Datos Factura - Nro Transaccion:
+              </span>
               {{ this.nro_transaccion + 1 }}
             </h4>
             <!-- Add the style and icon you want using the String format -->
@@ -56,16 +57,15 @@
               <span style="font-family: impact; font-size: 13px; color: black;"> Pago </span> <font-awesome-icon
                 icon="fa-solid fa-cart-shopping" />
             </label>
-            <Dropdown v-model="MetodoPago" :options="MetodosPagos" optionLabel="descripcion" :placeholder="'EFECTIVO'" 
-            />
+            <Dropdown v-model="MetodoPago" :options="MetodosPagos" optionLabel="descripcion"
+              :placeholder="'EFECTIVO'" />
           </div>
           <div class="field col-1">
             <label for="nro_tarjeta">
               <span style="font-family: impact; font-size: 13px; color: black;"> Nro Tarjeta </span><font-awesome-icon
                 icon="fa-solid fa-credit-card" />
             </label>
-            <InputText id="nro_tarjeta" type="text" placeholder="Nro de Tarjeta" v-model="nro_tarjeta"
-               />
+            <InputText id="nro_tarjeta" type="text" placeholder="Nro de Tarjeta" v-model="nro_tarjeta" />
           </div>
 
           <div class="field col-2">
@@ -109,8 +109,8 @@
           </div>
           <div class="field col-2">
             <label for="cliente">
-              <span style="font-family: impact; font-size: 13px; color: black;"> Nombre Cliente </span><font-awesome-icon
-                icon="fa-solid fa-user" />
+              <span style="font-family: impact; font-size: 13px; color: black;"> Nombre Cliente
+              </span><font-awesome-icon icon="fa-solid fa-user" />
             </label>
             <InputText id="cliente" type="text" placeholder="Cliente" v-model="cliente" />
           </div>
@@ -239,14 +239,15 @@
           </Column>
           <Column field="descuento" header="Descuento" :style="{ width: '70px' }">
             <template #body="slotProps">
-              <input type="number" :value="slotProps.data.descuento" style="width: 100%" v-on:keyup="calculateSubtotalDescuento(this.carrito.indexOf(slotProps.data))"/>
+              <input type="number" :value="slotProps.data.descuento" style="width: 100%"
+                v-on:keyup="calculateSubtotalDescuento(this.carrito.indexOf(slotProps.data))" />
             </template>
           </Column>
           <Column field="subtotal" header="Sub Total" :style="{ width: '70px' }">
             <template #body="slotProps">
               <td style="text-align: right" class="text-bold">
                 <!-- {{ slotProps.data.subtotal }} Bs. -->
-              {{ slotProps.data.subtotal - (slotProps.data.descuento * (slotProps.data.subtotal/100)) }} Bs.
+                {{ slotProps.data.subtotal - (slotProps.data.descuento * (slotProps.data.subtotal / 100)) }} Bs.
               </td>
             </template>
           </Column>
@@ -259,29 +260,29 @@
             </div>
             <div class="col-2">
               <span style="font-family: impact; font-size: 13px; color: black;"> {{ this.total }} Bs. </span>
-          
+
             </div>
           </div>
-           <div class="grid">
+          <div class="grid">
             <div class="col-10">
               <span style="font-family: impact; font-size: 13px; color: black;"> Total Descuento x Producto: </span>
-             
+
             </div>
             <div class="col-2">
               <span style="font-family: impact; font-size: 13px; color: black;"> {{ this.totalDescuento }} Bs. </span>
-            
+
             </div>
           </div>
 
           <div class="grid">
             <div class="col-10">
-            <span style="font-family: impact; font-size: 13px; color: black;"> Total Descuento: </span>
-             
+              <span style="font-family: impact; font-size: 13px; color: black;"> Total Descuento: </span>
+
             </div>
-           <div class="col-2">
-           
-              <input type="number"  style="width: 100%" v-on:keyup="calculatetotalDescuento()" /> 
-                        
+            <div class="col-2">
+
+              <input type="number" style="width: 100%" v-on:keyup="calculatetotalDescuento()" />
+
             </div>
           </div>
           <div class="grid">
@@ -289,8 +290,9 @@
               <span style="font-family: impact; font-size: 13px; color: black;"> Total Neto: </span>
             </div>
             <div class="col-2">
-              <span style="font-family: impact; font-size: 13px; color: black;"> {{ this.total - this.totalDescuento -this.totalDescuentoAdicional }} Bs. </span>
-              
+              <span style="font-family: impact; font-size: 13px; color: black;"> {{ this.total - this.totalDescuento
+                - this.totalDescuentoAdicional }} Bs. </span>
+
             </div>
           </div>
           <div class="card-footer">
@@ -344,7 +346,7 @@ export default {
         nombre: "GASTROSOFT",
         celular: "78555410",
         fecha: "2021-03-23",
-        nit: "5371072016",
+        nit: "166172023",
       },
       QRValue: "",
       optionsPlace: {
@@ -510,14 +512,14 @@ export default {
     updateTotalDescuento() {
       this.totalDescuento = 0;
       for (let i = 0; i < this.carrito.length; i++) {
-        this.totalDescuento += parseFloat(this.carrito[i].descuento)* (this.carrito[i].subtotal / 100).toFixed(2);
+        this.totalDescuento += parseFloat(this.carrito[i].descuento) * (this.carrito[i].subtotal / 100).toFixed(2);
       }
       this.totalDescuento = this.totalDescuento.toFixed(2);
     },
     updateTotalDescuento2() {
       this.totalDescuentoAdicional = 0;
       //let total_actual = this.total;
-      this.totalDescuentoAdicional += parseFloat(this.descuento_adicional) * (this.total/100).toFixed(2); 
+      this.totalDescuentoAdicional += parseFloat(this.descuento_adicional) * (this.total / 100).toFixed(2);
       this.totalDescuentoAdicional = this.totalDescuentoAdicional.toFixed(2);
     },
     getEventsSignificative() {
@@ -558,7 +560,7 @@ export default {
         });
     },
     calculateSubtotal: function (id) {
-   
+
       let cantidad = (this.carrito[id].cantidad = event.target.value);
 
       console.log(cantidad);
@@ -573,21 +575,21 @@ export default {
       );
       console.log("Sub Totales", subtotal_parse);
       let subtotal_parse_float = parseFloat(subtotal_parse);
-      this.carrito[id].subtotal = subtotal_parse_float.toFixed(2) ;
+      this.carrito[id].subtotal = subtotal_parse_float.toFixed(2);
       this.updateTotal();
     },
-     calculateSubtotalDescuento: function (id) {
+    calculateSubtotalDescuento: function (id) {
       this.carrito[id].descuento = event.target.value;
-     
+
       this.updateTotalDescuento();
-     },
-     calculatetotalDescuento: function () {
+    },
+    calculatetotalDescuento: function () {
       this.descuento_adicional = event.target.value;
-   
+
       this.updateTotalDescuento2();
-   
-     },
-    
+
+    },
+
     onSortChange(categoria_id) {
       this.getPlates(categoria_id);
     },
@@ -767,7 +769,7 @@ export default {
           return;
         }
         if (this.correo == "") {
-          
+
           this.mostrarAlert(
             "¡Olvidaste Poner el Correo del Cliente!",
             "El correo del cliente se encuentra vacio"
@@ -922,7 +924,7 @@ export default {
               return;
             }
           }
-          if (datos_de_venta.nit_ci == "5371072016") {
+          if (datos_de_venta.nit_ci == "166172023") {
             this.mostrarAlert(
               "NIT DE LA EMPRESA GASTROSOFT",
               "Este NIT no está autorizado para facturar"
