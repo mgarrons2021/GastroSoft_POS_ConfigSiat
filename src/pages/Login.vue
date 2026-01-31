@@ -54,7 +54,7 @@
                 height="90"
                 class="mb-3"
               /> -->
-              <div class="text-900 text-3xl font-medium mb-3">GASTROSOFTv1</div>
+              <div class="text-900 text-3xl font-medium mb-3">GastroSoftV1</div>
             </div>
 
             <div class="w-full md:w-10 mx-auto">

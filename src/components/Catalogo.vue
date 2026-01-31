@@ -74,7 +74,7 @@
                 icon="fa-solid fa-credit-card" />
             </label>
             <InputText id="totalDescuentoGiftcard" type="text" placeholder="Monto gitf_card"
-              v-model="totalDescuentoGiftcard" />
+              v-model="totalDescuentoGiftcard" readonly />
           </div>
 
           <div class="field col-2">
