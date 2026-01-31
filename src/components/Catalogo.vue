@@ -242,8 +242,8 @@
           </Column>
           <Column field="descuento" header="Descuento" :style="{ width: '70px' }">
             <template #body="slotProps">
-              <input type="number" :value="slotProps.data.descuento" style="width: 100%" minlength="1" maxlength="4"
-                v-on:keyup="calculateSubtotalDescuento(this.carrito.indexOf(slotProps.data))" readonly/>
+              <input readonly type="number" :value="slotProps.data.descuento" style="width: 100%" minlength="1"
+                maxlength="4" v-on:keyup="calculateSubtotalDescuento(this.carrito.indexOf(slotProps.data))" />
             </template>
           </Column>
           <Column field="subtotal" header="Sub Total" :style="{ width: '70px' }">
@@ -283,8 +283,8 @@
             </div>
             <div class="col-2">
 
-              <input type="number" style="width: 100%" :value="descuento_adicional"
-                v-on:keyup="calculatetotalDescuento()" readonly />
+              <input readonly type="number" style="width: 100%" :value="descuento_adicional"
+                v-on:keyup="calculatetotalDescuento()" />
 
             </div>
           </div>
